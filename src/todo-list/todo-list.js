@@ -3,13 +3,37 @@ import TodoItem from './todo-item';
 
 class TodoList extends React.Component {
 
+  filter = () => {
+    let filtered;
+    let newArr = this.props.listItems.map((item,index) => {
+      item.index = index;
+      return item;
+    });
+    
+    switch (this.props.filterBy) {
+      case 'active':
+        filtered = newArr.filter(item => item.active);
+        break;
+
+      case 'completed':
+        filtered = newArr.filter(item => !item.active);
+        break;
+
+      default:
+        filtered = newArr;
+        break;
+    }
+
+    return filtered;
+  }
+
   render() {
     return (
 
       <ul id="list">
-        {this.props.listItems.map((item, index) => (
+        {this.filter().map((item) => (
           <TodoItem
-            index={index}
+            index={item.index}
             active={item.active}
             dataId={item.id}
             key={item.id}

@@ -29,7 +29,8 @@ import './style.css';
 class App extends React.Component {
 
   state = {
-    listItems: []
+    listItems: [],
+    filterBy: 'all'
   };
 
   componentDidMount(){
@@ -42,6 +43,12 @@ class App extends React.Component {
     this.setState({
       listItems: storage
     });    
+  }
+
+  filterCallback = (value) => {
+    this.setState({
+      filterBy: value
+    });
   }
 
   inputCallback = (value) => {
@@ -63,9 +70,11 @@ class App extends React.Component {
         <TodoList
           parentCallback={this.inputCallback}
           listItems={this.state.listItems}
+          filterBy={this.state.filterBy}
         />
         <Footer
           parentCallback={this.inputCallback}
+          filterCallback={this.filterCallback}
           listItems={this.state.listItems}
         />
       </section>

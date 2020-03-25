@@ -3,14 +3,20 @@ import styled from 'styled-components'
 
 class Filter extends React.Component{
 
+  sendData = (value) => {
+    this.props.filterCallback(value);
+  }
 
+  filterBy = (e) => {
+    this.sendData(e.target.getAttribute('data-filter'));
+  }
 
   render(){
     return (
       <StyledUl>
-        <li data-filter="all">All</li>
-        <li data-filter="active">Active</li>
-        <li data-filter="completed">Completed</li>
+        <li data-filter="all" onClick={this.filterBy}>All</li>
+        <li data-filter="active" onClick={this.filterBy}>Active</li>
+        <li data-filter="completed" onClick={this.filterBy}>Completed</li>
       </StyledUl>
     )
   }

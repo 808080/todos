@@ -7,7 +7,7 @@ class RemoveCompletedBtn extends React.Component{
   }
 
   deleteDone = () => {
-    let removed = this.props.listItems.filter(item => item.active);    
+    let removed = this.props.listItems.filter(item => item.active);
     this.sendData(removed);
   }
 

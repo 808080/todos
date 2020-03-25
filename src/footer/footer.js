@@ -11,6 +11,7 @@ class Footer extends React.Component{
         <span>{this.props.listItems.filter(item => item.active).length}</span>
         <Filter
           parentCallback={this.props.parentCallback}
+          filterCallback={this.props.filterCallback}
           listItems={this.props.listItems}
         />
         <RemoveCompletedBtn
