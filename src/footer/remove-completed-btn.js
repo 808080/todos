@@ -1,25 +1,29 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 
-class RemoveCompletedBtn extends React.Component{
-
-  sendData = (value) => {
-    this.props.parentCallback(value);
-  }
-
+class RemoveCompletedBtn extends React.Component {
   deleteDone = () => {
     let removed = this.props.listItems.filter(item => item.active);
-    this.sendData(removed);
+    this.props.parentCallback(removed);
   }
 
-  render(){
+  render() {
+    const { listItems } = this.props;
+    const doneNum =
+      listItems.length - listItems.filter(
+        item => item.active
+      ).length;
+
     return (
-      <button onClick={this.deleteDone}>Clear completed [
-        <span>
-        {
-          this.props.listItems.length - this.props.listItems.filter(item => item.active).length
-        }
-        </span>
-      ]</button>
+      <Button
+        className={doneNum ? '' : 'invisible'}
+        variant="outline-primary"
+        onClick={this.deleteDone}
+      >
+        Clear completed [
+        <span>{doneNum}</span>
+        ]
+      </Button>
     )
   }
 }

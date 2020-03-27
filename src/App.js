@@ -1,47 +1,35 @@
-/*
-component structure (to be updated):
-
-- todos app
-  - header
-    - toggle all button
-    - new todo input
-  - section with todos
-    - todo list item
-      - status checkbox
-      - remove button
-  - footer
-    - number of active items left
-    - status filter
-      - show all todos
-      - show active todos
-      - show completed todos
-    - remove completed todos button
-
-*/
-
-
 import React from 'react';
+import styled from 'styled-components';
+
 import Header from './header/header';
 import TodoList from './todo-list/todo-list';
 import Footer from './footer/footer';
+
 import './style.css';
 
 class App extends React.Component {
-
   state = {
     listItems: [],
     filterBy: 'all'
   };
 
   componentDidMount(){
-    let storage = [];
+    let storage = this.state.listItems;
+    let filter = this.state.filterBy;
 
-    if(localStorage.getItem('list')){
-      storage = JSON.parse(localStorage.getItem('list'))
+    const getData = localStorage.getItem('list');
+    const getFilter = localStorage.getItem('filter');
+
+    if(getData){
+      storage = JSON.parse(getData)
+    }
+    if(getFilter){
+      filter = getFilter
     }
 
     this.setState({
-      listItems: storage
+      listItems: storage,
+      filterBy: filter
     });    
   }
 
@@ -57,12 +45,36 @@ class App extends React.Component {
       listItems: value
     });
 
-    console.log(this.state.listItems);
+    // console.log(this.state.listItems);
+  }
+
+  filter = () => {
+    let filtered;
+
+    switch (this.state.filterBy) {
+      case 'all':
+        filtered = 'all';
+        break;
+
+      case 'active':
+        filtered = true;
+        break;
+
+      case 'completed':
+        filtered = false;
+        break;
+
+      default:
+        
+        break;
+    }
+
+    return filtered;
   }
 
   render(){
     return (
-      <section>
+      <Container>
         <Header
           parentCallback={this.inputCallback}
           listItems={this.state.listItems}
@@ -70,16 +82,22 @@ class App extends React.Component {
         <TodoList
           parentCallback={this.inputCallback}
           listItems={this.state.listItems}
-          filterBy={this.state.filterBy}
+          filterBy={this.filter()}
         />
         <Footer
           parentCallback={this.inputCallback}
           filterCallback={this.filterCallback}
           listItems={this.state.listItems}
         />
-      </section>
+      </Container>
     )
   }
 }
 
 export default App;
+
+const Container = styled.section`
+  max-width: 550px;
+  width: 100%;
+  margin: 0 auto;
+`;

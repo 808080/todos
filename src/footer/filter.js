@@ -1,40 +1,27 @@
 import React from 'react';
-import styled from 'styled-components'
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
-class Filter extends React.Component{
+import FilterBtn from './filter-btn';
 
-  sendData = (value) => {
-    this.props.filterCallback(value);
-  }
-
-  filterBy = (e) => {
-    this.sendData(e.target.getAttribute('data-filter'));
-  }
-
-  render(){
+class Filter extends React.Component {
+  render() {
     return (
-      <StyledUl>
-        <li data-filter="all" onClick={this.filterBy}>All</li>
-        <li data-filter="active" onClick={this.filterBy}>Active</li>
-        <li data-filter="completed" onClick={this.filterBy}>Completed</li>
-      </StyledUl>
+      <ButtonGroup size="sm">
+        <FilterBtn
+          filterBy="all"
+          filterCallback={this.props.filterCallback}
+        />
+        <FilterBtn
+          filterBy="active"
+          filterCallback={this.props.filterCallback}
+        />
+        <FilterBtn
+          filterBy="completed"
+          filterCallback={this.props.filterCallback}
+        />
+      </ButtonGroup>
     )
   }
 }
-
-const StyledUl = styled.ul`
-  display: flex;
-  list-style: none;
-
-  li{
-    cursor: pointer;
-    transition: 0.1s;
-    padding: 5px;
-
-    :hover {
-      background-color: lime;
-    }
-  }
-`;
 
 export default Filter;

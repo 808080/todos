@@ -1,19 +1,24 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
+import InputGroup from 'react-bootstrap/InputGroup';
 
-class RemoveBtn extends React.Component{
-
-  sendData = (value) => {
-    this.props.parentCallback(value);
-  }
-
+class RemoveBtn extends React.Component {
   delete = () => {
-    this.props.listItems.splice(this.props.index,1);
-    this.sendData(this.props.listItems);
+    const updatedList = this.props.listItems;
+    updatedList.splice(this.props.index, 1);
+    this.props.parentCallback(updatedList);
   }
 
-  render(){
+  render() {
     return (
-      <button onClick={this.delete}>×</button>
+      <InputGroup.Append>
+        <Button
+          variant="danger"
+          onClick={this.delete}
+        >
+          ×
+        </Button>
+      </InputGroup.Append>
     )
   }
 }

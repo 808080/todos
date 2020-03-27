@@ -1,48 +1,55 @@
 import React from 'react';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
+
 import ToggleAll from './toggle-all';
 
-class Header extends React.Component{
-
-  constructor(props){
+class Header extends React.Component {
+  constructor(props) {
     super(props);
 
     let counter = 1;
-    if (localStorage.getItem('ids')) {
-      counter = parseInt(localStorage.getItem('ids'));
+    const ids = localStorage.getItem('ids');
+    if (ids) {
+      counter = parseInt(ids);
     }
 
     this.id = counter;
   }
 
-  sendData = (value) => {
-    this.props.parentCallback(value);
-  }
-
   handleInput = (e) => {
-    if(e.key === 'Enter'){
-      if(e.target.value){
+    if (e.key === 'Enter') {
+      if (e.target.value) {
         this.id++;
         localStorage.setItem('ids', this.id);
-        this.props.listItems.push({
+        const listItems = [...this.props.listItems];
+        listItems.push({
           id: this.id,
           active: true,
           text: e.target.value
         });
-        this.sendData(this.props.listItems);
+        this.props.parentCallback(listItems);
       }
-      e.target.value = '';          
+      e.target.value = '';
     }
   }
 
-  render(){
+  render() {
     return (
-      <header>
-        <h1>todos</h1>
-        <ToggleAll
-          parentCallback={this.props.parentCallback}
-          listItems={this.props.listItems}
-        />
-        <input type="text" placeholder="What needs to be done?" onKeyPress={this.handleInput} />
+      <header className="mb-4">
+        <h1 className="display-2 text-center">todos</h1>
+        <InputGroup>
+          <ToggleAll
+            parentCallback={this.props.parentCallback}
+            listItems={this.props.listItems}
+          />
+          <FormControl
+            aria-describedby="basic-addon1"
+            type="text"
+            placeholder="What needs to be done?"
+            onKeyPress={this.handleInput}
+          />
+        </InputGroup>
       </header>
     )
   }
