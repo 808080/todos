@@ -1,10 +1,10 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import styled from 'styled-components';
 
 class RemoveCompletedBtn extends React.Component {
   deleteDone = () => {
-    let removed = this.props.listItems.filter(item => item.active);
-    this.props.parentCallback(removed);
+    let list = this.props.listItems.filter(item => item.active);
+    this.props.onListChange(list);
   }
 
   render() {
@@ -15,17 +15,27 @@ class RemoveCompletedBtn extends React.Component {
       ).length;
 
     return (
-      <Button
+      <RemoveCompleted
         className={doneNum ? '' : 'invisible'}
-        variant="outline-primary"
         onClick={this.deleteDone}
       >
-        Clear completed [
-        <span>{doneNum}</span>
-        ]
-      </Button>
+        {`Clear completed [${doneNum}]`}
+      </RemoveCompleted>
     )
   }
 }
+
+const RemoveCompleted = styled.button`
+  float: right;
+  background: none;
+  border: none;
+  color: #777;
+  position: relative;
+  z-index: 2;
+
+  &:hover{
+    text-decoration: underline;
+  }
+`;
 
 export default RemoveCompletedBtn;

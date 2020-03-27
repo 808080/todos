@@ -1,27 +1,31 @@
 import React from 'react';
-import ListGroup from 'react-bootstrap/ListGroup';
+import styled from 'styled-components';
 
 import TodoItem from './todo-item';
 
 class TodoList extends React.Component {
   render() {
     return (
-      <ListGroup as="ul">
+      <List>
         {this.props.listItems.map((item, index) => (
           <TodoItem
             index={index}
-            active={item.active}
-            dataId={item.id}
+            item={item}
             key={item.id}
-            value={item.text}
-            parentCallback={this.props.parentCallback}
+            onListChange={this.props.onListChange}
             listItems={this.props.listItems}
             filterBy={this.props.filterBy}
           />
         ))}
-      </ListGroup>
+      </List>
     )
   }
 }
+
+const List = styled.ul`
+  margin: 0;
+  padding: 0;
+  list-style: none;
+`;
 
 export default TodoList;

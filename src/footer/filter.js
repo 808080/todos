@@ -1,27 +1,49 @@
 import React from 'react';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import styled from 'styled-components';
 
 import FilterBtn from './filter-btn';
 
 class Filter extends React.Component {
   render() {
     return (
-      <ButtonGroup size="sm">
+      <FilterOptions>
         <FilterBtn
           filterBy="all"
-          filterCallback={this.props.filterCallback}
+          filterName="All"
+          onListFilter={this.props.onListFilter}
+          currentFilter={this.props.currentFilter}
         />
+
         <FilterBtn
-          filterBy="active"
-          filterCallback={this.props.filterCallback}
+          filterBy="true"
+          filterName="Active"
+          onListFilter={this.props.onListFilter}
+          currentFilter={this.props.currentFilter}
         />
+
         <FilterBtn
-          filterBy="completed"
-          filterCallback={this.props.filterCallback}
+          filterBy="false"
+          filterName="Completed"
+          onListFilter={this.props.onListFilter}
+          currentFilter={this.props.currentFilter}
         />
-      </ButtonGroup>
+      </FilterOptions>
     )
   }
 }
+
+const FilterOptions = styled.ul`
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 0;
+
+  @media (max-width: 450px){
+    bottom: 10px;
+  }
+`;
 
 export default Filter;

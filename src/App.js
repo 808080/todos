@@ -5,99 +5,71 @@ import Header from './header/header';
 import TodoList from './todo-list/todo-list';
 import Footer from './footer/footer';
 
-import './style.css';
+const LIST_STORAGE_NAME = 'list';
+const list = {
+  get: () => {
+    return JSON.parse(localStorage.getItem(LIST_STORAGE_NAME));
+  },
+  set: (list) => {
+    return localStorage.setItem(LIST_STORAGE_NAME, JSON.stringify(list));
+  }
+};
 
 class App extends React.Component {
   state = {
-    listItems: [],
-    filterBy: 'all'
+    listItems: list.get() || [],
+    filterBy: localStorage.getItem('filter') || 'all'
   };
 
-  componentDidMount(){
-    let storage = this.state.listItems;
-    let filter = this.state.filterBy;
-
-    const getData = localStorage.getItem('list');
-    const getFilter = localStorage.getItem('filter');
-
-    if(getData){
-      storage = JSON.parse(getData)
-    }
-    if(getFilter){
-      filter = getFilter
-    }
-
+  onListFilter = (value) => {
     this.setState({
-      listItems: storage,
-      filterBy: filter
+      filterBy: value
     });    
   }
 
-  filterCallback = (value) => {
+  onListChange = (listItems) => {
+    list.set(listItems);
     this.setState({
-      filterBy: value
+      listItems
     });
   }
 
-  inputCallback = (value) => {
-    localStorage.setItem('list', JSON.stringify(value));
-    this.setState({
-      listItems: value
-    });
-
-    // console.log(this.state.listItems);
-  }
-
-  filter = () => {
-    let filtered;
-
-    switch (this.state.filterBy) {
-      case 'all':
-        filtered = 'all';
-        break;
-
-      case 'active':
-        filtered = true;
-        break;
-
-      case 'completed':
-        filtered = false;
-        break;
-
-      default:
-        
-        break;
-    }
-
-    return filtered;
-  }
-
-  render(){
+  render() {
     return (
       <Container>
         <Header
-          parentCallback={this.inputCallback}
+          onListChange={this.onListChange}
           listItems={this.state.listItems}
         />
+
         <TodoList
-          parentCallback={this.inputCallback}
+          onListChange={this.onListChange}
           listItems={this.state.listItems}
-          filterBy={this.filter()}
+          filterBy={this.state.filterBy}
         />
+
         <Footer
-          parentCallback={this.inputCallback}
-          filterCallback={this.filterCallback}
+          onListChange={this.onListChange}
+          onListFilter={this.onListFilter}
           listItems={this.state.listItems}
+          currentFilter={this.state.filterBy}
         />
       </Container>
     )
   }
 }
 
-export default App;
-
 const Container = styled.section`
   max-width: 550px;
   width: 100%;
-  margin: 0 auto;
+  margin: 10px auto 40px;
+  background: #fff;
+  position: relative;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  line-height: 1.4em;
+  font: 24px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  color: #4d4d4d;
 `;
+
+export default App;

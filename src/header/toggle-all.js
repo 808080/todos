@@ -1,11 +1,10 @@
 import React from 'react';
-import ToggleButton from 'react-bootstrap/ToggleButton';
-import InputGroup from 'react-bootstrap/InputGroup';
+import styled from 'styled-components';
 
-class ToggleAll extends React.Component{
+class ToggleAll extends React.Component {
   allChecked = () => {
     for (let i = 0; i < this.props.listItems.length; i++) {
-      if(this.props.listItems[i].active){
+      if (this.props.listItems[i].active) {
         return false;
       }
     }
@@ -13,25 +12,49 @@ class ToggleAll extends React.Component{
   }
 
   checkAll = () => {
-    if(!this.allChecked()){
-      this.props.listItems.map(item => item.active = false);
+    let list = this.props.listItems;
+    if (!this.allChecked()) {
+      list.map(item => item.active = false);
     } else {
-      this.props.listItems.map(item => item.active = true);
+      list.map(item => item.active = true);
     }
-    this.props.parentCallback(this.props.listItems);
+    this.props.onListChange(list);
   }
 
-  render(){
+  render() {
     return (
-      <InputGroup.Prepend>
-        <ToggleButton
+      <ToggleBtn>
+        <input
+          id="toggle-all"
           type="checkbox"
           checked={this.allChecked()}
           onChange={this.checkAll}
         />
-      </InputGroup.Prepend>
+
+        <label htmlFor="toggle-all">❯</label>
+      </ToggleBtn>
     )
   }
 }
+
+const ToggleBtn = styled.div`
+  label{
+    margin: 0;
+    position: absolute;
+    transform: rotate(90deg);
+    font-size: 22px;
+    color: #e6e6e6;
+    padding: 17px 21px;
+    cursor: pointer;
+  }
+
+  #toggle-all:checked + label {
+    color: #4d4d4d;
+  }
+
+  #toggle-all {
+    display: none;
+  }
+`;
 
 export default ToggleAll;
