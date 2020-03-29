@@ -61,17 +61,17 @@ class TodoItem extends React.Component {
   render() {
     if (
       this.props.filterBy !== 'all' &&
-      this.props.item.active.toString() !== this.props.filterBy
+      this.props.item.status !== this.props.filterBy
     ) return null;
 
     return (
       <ListItem
-        className={!this.props.item.active ? 'done' : ''}
+        className={this.props.item.status === 'complete' ? 'done' : ''}
       >
         <DoneBtn
           listItems={this.props.listItems}
           onListChange={this.props.onListChange}
-          active={this.props.item.active}
+          status={this.props.item.status}
           index={this.props.index}
         />
 

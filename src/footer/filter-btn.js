@@ -13,20 +13,19 @@ class FilterBtn extends React.Component {
           className={this.props.currentFilter === this.props.filterBy ? 'selected' : ''}
           onClick={this.getOption}
         >
-          {this.props.filterName}
+          {this.props.filterBy}
         </FilterOption>
     )
   }
 }
 
 const FilterOption = styled.li`
-  display: inline;
+  display: inline-block;
   color: inherit;
-  margin: 3px;
-  padding: 3px 7px;
-  text-decoration: none;
+  padding: 0 7px;
   border-radius: 3px;
   cursor: pointer;
+  text-transform: capitalize;
 
   &.selected {
     border: 1px solid rgba(175, 47, 47, 0.2);

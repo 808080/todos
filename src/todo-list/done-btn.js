@@ -5,7 +5,7 @@ class DoneBtn extends React.Component{
   toggleCheck = () => {
     let list = this.props.listItems;
     let index = this.props.index;
-    list[index].active = !list[index].active;
+    list[index].status = list[index].status === 'complete' ? 'active' : 'complete';
 
     this.props.onListChange(list);
   }
@@ -15,7 +15,7 @@ class DoneBtn extends React.Component{
       <DoneWrap>
         <input
           type="checkbox"
-          checked={!this.props.active ? true : false}
+          checked={this.props.status === 'complete' ? true : false}
           onChange={this.toggleCheck}
           className="done-checkbox"
           id={"check" + this.props.index}

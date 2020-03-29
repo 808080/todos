@@ -9,21 +9,18 @@ class Filter extends React.Component {
       <FilterOptions>
         <FilterBtn
           filterBy="all"
-          filterName="All"
           onListFilter={this.props.onListFilter}
           currentFilter={this.props.currentFilter}
         />
 
         <FilterBtn
-          filterBy="true"
-          filterName="Active"
+          filterBy="active"
           onListFilter={this.props.onListFilter}
           currentFilter={this.props.currentFilter}
         />
 
         <FilterBtn
-          filterBy="false"
-          filterName="Completed"
+          filterBy="complete"
           onListFilter={this.props.onListFilter}
           currentFilter={this.props.currentFilter}
         />

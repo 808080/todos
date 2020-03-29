@@ -13,7 +13,7 @@ class Header extends React.Component {
       const listItems = [...this.props.listItems];
       listItems.push({
         id: this.id,
-        active: true,
+        status: 'active',
         text: e.target.value
       });
       this.props.onListChange(listItems);

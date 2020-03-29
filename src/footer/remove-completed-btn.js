@@ -3,15 +3,14 @@ import styled from 'styled-components';
 
 class RemoveCompletedBtn extends React.Component {
   deleteDone = () => {
-    let list = this.props.listItems.filter(item => item.active);
+    let list = this.props.listItems.filter(item => item.status === 'active');
     this.props.onListChange(list);
   }
 
   render() {
     const { listItems } = this.props;
-    const doneNum =
-      listItems.length - listItems.filter(
-        item => item.active
+    const doneNum = listItems.filter(
+        item => item.status === 'complete'
       ).length;
 
     return (

@@ -6,7 +6,7 @@ import RemoveCompletedBtn from './remove-completed-btn';
 
 class Footer extends React.Component {
   render() {
-    let activeNum = this.props.listItems.filter(item => item.active).length;
+    let activeNum = this.props.listItems.filter(item => item.status === 'active').length;
 
     return (
       <FooterWrap>

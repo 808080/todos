@@ -4,7 +4,7 @@ import styled from 'styled-components';
 class ToggleAll extends React.Component {
   allChecked = () => {
     for (let i = 0; i < this.props.listItems.length; i++) {
-      if (this.props.listItems[i].active) {
+      if (this.props.listItems[i].status === 'active') {
         return false;
       }
     }
@@ -14,9 +14,9 @@ class ToggleAll extends React.Component {
   checkAll = () => {
     let list = this.props.listItems;
     if (!this.allChecked()) {
-      list.map(item => item.active = false);
+      list.map(item => item.status = 'complete');
     } else {
-      list.map(item => item.active = true);
+      list.map(item => item.status = 'active');
     }
     this.props.onListChange(list);
   }
